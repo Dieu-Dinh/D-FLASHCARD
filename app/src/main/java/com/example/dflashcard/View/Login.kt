@@ -30,6 +30,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel = viewModel(), navController: NavHostController) {
@@ -82,6 +84,7 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel(), navController: NavHostC
 
             Spacer(modifier = Modifier.height(16.dp))
 
+
             // Login Button
             Button(
                 onClick = {
@@ -105,6 +108,24 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel(), navController: NavHostC
             ) {
                 Text("Login")
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button (
+                onClick = {
+                    navController.navigate("Register")
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Register")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = "Or login with",
+                modifier = Modifier.fillMaxWidth(),
+                fontWeight = FontWeight.Bold,
+
+                )
         }
     }
 }

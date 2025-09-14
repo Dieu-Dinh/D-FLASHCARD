@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -50,7 +51,7 @@ fun Register(navController: NavController, viewModel: RegisterVM = viewModel()) 
             value = username,
             onValueChange = { username = it },
             label = { Text("Username") },
-            modifier = Modifier.fillMaxSize().padding(8.dp)
+            modifier = Modifier.fillMaxWidth().padding(8.dp)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -59,7 +60,7 @@ fun Register(navController: NavController, viewModel: RegisterVM = viewModel()) 
             value = email,
             onValueChange = { email= it },
             label = { Text("Email") },
-            modifier = Modifier.fillMaxSize().padding(8.dp)
+            modifier = Modifier.fillMaxWidth().padding(8.dp)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -68,16 +69,16 @@ fun Register(navController: NavController, viewModel: RegisterVM = viewModel()) 
             value = password,
             onValueChange = { password = it },
             label = { Text("Password") },
-            modifier = Modifier.fillMaxSize().padding(8.dp)
+            modifier = Modifier.fillMaxWidth().padding(8.dp)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = confirmPassword,
-            onValueChange = { username = it },
+            onValueChange = { confirmPassword = it },
             label = { Text("Confirm Password") },
-            modifier = Modifier.fillMaxSize().padding(8.dp)
+            modifier = Modifier.fillMaxWidth().padding(8.dp)
         )
 
         Spacer(modifier = Modifier.height(24.dp))
