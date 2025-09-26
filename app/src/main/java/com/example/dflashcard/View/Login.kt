@@ -2,13 +2,17 @@ package com.example.dflashcard.View
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -30,8 +34,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel = viewModel(), navController: NavHostController) {
@@ -120,12 +126,54 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel(), navController: NavHostC
                 Text("Register")
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(24.dp))
             Text(text = "Or login with",
                 modifier = Modifier.fillMaxWidth(),
-                fontWeight = FontWeight.Bold,
-
+                fontWeight = FontWeight.Light,
+                textAlign = TextAlign.Center,
                 )
+
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+
+            ){
+                Button(
+                    onClick = { /* Handle Google login */ },
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .size(width = 200.dp, height = 50.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.gg_logo),
+                        contentDescription = "Google Logo",
+                        modifier = Modifier.size(24.dp)
+                    )
+
+                }
+
+                Button(
+                    onClick = { /* Handle Facebook login */ },
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .size(width = 200.dp, height = 50.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White
+                    ),
+                    shape = CircleShape
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.fb_logo),
+                        contentDescription = "Facebook Logo",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
         }
     }
 }

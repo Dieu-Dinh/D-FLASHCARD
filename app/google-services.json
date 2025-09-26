@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "933101274889",
+    "project_id": "dflashcard-4a52d",
+    "storage_bucket": "dflashcard-4a52d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933101274889:android:299b02631b71b1748d75d8",
+        "android_client_info": {
+          "package_name": "com.example.dflashcard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7kKn9Lx0wZjdV89xIUrAdl0Xm3GKK3Yk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

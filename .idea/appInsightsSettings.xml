@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.dflashcard" />
+                  <option name="mobileSdkAppId" value="1:933101274889:android:299b02631b71b1748d75d8" />
+                  <option name="projectId" value="dflashcard-4a52d" />
+                  <option name="projectNumber" value="933101274889" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
