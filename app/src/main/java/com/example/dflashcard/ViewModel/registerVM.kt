@@ -6,15 +6,21 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.dflashcard.View.Register
 import kotlinx.coroutines.launch
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 sealed class RegisterState{
     object IDLE: RegisterState()
+    object LOADING: RegisterState()
     data class SUCCESS(val message: String): RegisterState()
     data class ERROR(val error: String): RegisterState()
 }
 
 
 class RegisterVM: ViewModel() {
+    private val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
+
     var username = mutableStateOf("")
         private set
     var email = mutableStateOf("")
@@ -55,12 +61,29 @@ class RegisterVM: ViewModel() {
                 return@launch
             }
 
-            if (email.value == "xxxxxxx@gmail.com"){
-                registerState.value = RegisterState.ERROR("Email already in use")
-            }
-            else {
-                registerState.value = RegisterState.SUCCESS("Registration successful")
-            }
+            registerState.value = RegisterState.LOADING
+
+            auth.createUserWithEmailAndPassword(email.value, password.value)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful){
+                        val uid = task.result?.user?.uid?: ""
+                        val userMap = mapOf(
+                            "uid" to uid ,
+                            "username" to username.value,
+                            "email" to email.value
+                        )
+                        db.collection("users").document(uid).set(userMap)
+                            .addOnSuccessListener {
+                                registerState.value = RegisterState.SUCCESS("Registration successful")
+                            }
+                            .addOnFailureListener { e ->
+                                registerState.value = RegisterState.ERROR("Failed to save user: ${e.message}")
+                            }
+                    }
+                    else {
+                        registerState.value = RegisterState.ERROR(task.exception?.message ?: "Registration failed")
+                    }
+                }
         }
     }
 

@@ -1,5 +1,4 @@
 package com.example.dflashcard.View
-import android.widget.Button
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,29 +9,27 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.dflashcard.Navigation.Screen
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.Navigation
 import com.example.dflashcard.ViewModel.RegisterVM
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
+import com.example.dflashcard.ViewModel.RegisterState
+
 
 @Composable
 fun Register(navController: NavController, viewModel: RegisterVM = viewModel()) {
-    var username by remember {mutableStateOf("")}
-    var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
+    val username by viewModel.username
+    val email by viewModel.email
+    val password by viewModel.password
+    val confirmPassword by viewModel.confirmPassword
+    val registerState by viewModel.registerState
 
     Column (
         verticalArrangement = Arrangement.Center,
@@ -49,7 +46,7 @@ fun Register(navController: NavController, viewModel: RegisterVM = viewModel()) 
 
         OutlinedTextField(
             value = username,
-            onValueChange = { username = it },
+            onValueChange = { viewModel.onUsernameChange(it) },
             label = { Text("Username") },
             modifier = Modifier.fillMaxWidth().padding(8.dp)
         )
@@ -58,7 +55,7 @@ fun Register(navController: NavController, viewModel: RegisterVM = viewModel()) 
 
         OutlinedTextField(
             value = email,
-            onValueChange = { email= it },
+            onValueChange = { viewModel.onEmailChange(it) },
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth().padding(8.dp)
         )
@@ -67,7 +64,7 @@ fun Register(navController: NavController, viewModel: RegisterVM = viewModel()) 
 
         OutlinedTextField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = { viewModel.onPasswordChange(it) },
             label = { Text("Password") },
             modifier = Modifier.fillMaxWidth().padding(8.dp)
         )
@@ -76,7 +73,7 @@ fun Register(navController: NavController, viewModel: RegisterVM = viewModel()) 
 
         OutlinedTextField(
             value = confirmPassword,
-            onValueChange = { confirmPassword = it },
+            onValueChange = { viewModel.onConfirmPasswordChange(it) },
             label = { Text("Confirm Password") },
             modifier = Modifier.fillMaxWidth().padding(8.dp)
         )
@@ -85,21 +82,28 @@ fun Register(navController: NavController, viewModel: RegisterVM = viewModel()) 
 
         Button(
             onClick = {
-                if(password == confirmPassword && username.isNotBlank() && email.isNotBlank()){
-                    navController.navigate(Screen.Login.route){
-                        popUpTo(Screen.Register.route){inclusive = true}
-                    }
-                }
-                else {
-                    errorMessage = "Registration failed. Please check your inputs."
-                }
+                viewModel.register()
             }
         ) {
             Text(text = "Register")
         }
-        errorMessage?.let {
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = it, color = androidx.compose.ui.graphics.Color.Red)
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+    }
+
+    // Xu ly trang thai dang ki
+    when(val currentState = registerState){
+        is RegisterState.SUCCESS -> {
+            Text(text = currentState.message, color = Color.Green)
+
+            navController.navigate(Screen.Login.route){
+                popUpTo(Screen.Register.route) {inclusive = true}
+            }
         }
+        is RegisterState.ERROR -> {
+            Text(text = currentState.error, color = Color.Red)
+        }
+        else -> { /* Do nothing */ }
     }
 }
